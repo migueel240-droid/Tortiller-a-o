@@ -1,0 +1,30 @@
+TORTILLERÍA OBREGÓN — PAQUETE INICIAL
+=====================================
+
+ARCHIVOS
+- index.html: interfaz.
+- app.js: lógica y datos locales.
+- manifest.json: configuración instalable.
+- sw.js: caché para uso offline después de cargar la aplicación una vez.
+- LEEME.txt: instrucciones.
+
+PRUEBA LOCAL
+La forma recomendada es publicar estos archivos en GitHub Pages:
+1. Crea o abre el repositorio TortilleriaObregon.
+2. Sube los archivos en la raíz del repositorio.
+3. En Settings > Pages, selecciona Deploy from a branch, rama main y carpeta /(root).
+4. Espera a que GitHub Pages publique la dirección.
+5. Abre la URL desde Chrome Android y conéctate una vez para cargar la app.
+6. En el menú de Chrome, elige “Añadir a pantalla de inicio” o “Instalar aplicación”.
+
+ACCESOS DE DEMOSTRACIÓN
+- Administrador: PIN ADMIN123 (puede cambiarse en Configuración).
+- Repartidor de ejemplo: PIN 1234.
+Cambia esos PIN antes de usar información real.
+
+IMPORTANTE
+- Los datos se guardan localmente en el navegador/dispositivo. Borrar los datos del navegador puede eliminarlos.
+- Para varios dispositivos y sincronización segura entre teléfonos se necesita backend/autenticación; este paquete no implementa servidor.
+- Esta versión es una base funcional inicial, no un sistema auditado para producción.
+- El inventario de repartidor se administra por cargas y ventas. Cargar una ruta descuenta inventario de tienda y el cierre devuelve automáticamente los sobrantes.
+- No se deben usar datos reales sensibles hasta configurar autenticación y respaldos adecuados.
