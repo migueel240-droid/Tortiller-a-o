@@ -1,0 +1,11 @@
+{
+  "name": "Tortillería Obregón",
+  "short_name": "Tortillería",
+  "description": "Ventas e inventarios de Tortillería Obregón",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f2f5fa",
+  "theme_color": "#123b75",
+  "icons": []
+}

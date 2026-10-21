@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#123b75">
+<meta name="description" content="Ventas e inventario de Tortillería Obregón">
+<link rel="manifest" href="manifest.json">
+<title>Tortillería Obregón</title>
+<style>
+:root{--blue:#123b75;--blue2:#1e4f91;--yellow:#ffd43b;--white:#fff;--bg:#f2f5fa;--ink:#172033;--muted:#64748b;--line:#dbe3ef;--green:#16803d;--red:#b42318}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}button,input,select{font:inherit}button{cursor:pointer}
+header{background:var(--blue);color:#fff;padding:16px 16px 12px;position:sticky;top:0;z-index:5;box-shadow:0 2px 8px #0002}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:12px;background:#fff;color:var(--blue);display:grid;place-items:center;font-weight:900;font-size:22px}.brand h1{font-size:18px;line-height:1.15;margin:0}.brand p{margin:4px 0 0;font-size:12px;opacity:.9}.yellowbar{height:4px;background:var(--yellow);border-radius:9px;margin-top:13px}
+nav{display:flex;gap:7px;overflow-x:auto;padding:10px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:88px;z-index:4}
+nav button{border:0;background:#edf2f9;color:var(--blue);border-radius:10px;padding:10px 12px;white-space:nowrap;font-weight:700;font-size:13px}nav button.active{background:var(--yellow)}
+main{max-width:900px;margin:0 auto;padding:14px 12px 40px}.page{display:none}.page.active{display:block}.page-title{color:var(--blue);font-size:21px;margin:8px 0 14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px;margin-bottom:12px;box-shadow:0 1px 2px #10204008}.row{display:flex;align-items:center;gap:10px}.between{justify-content:space-between}.grow{flex:1;min-width:0}.muted{color:var(--muted);font-size:13px}.small{font-size:12px}.bold{font-weight:750}.price{font-weight:800;color:var(--blue);font-size:18px}.field{display:flex;flex-direction:column;gap:6px;margin:10px 0}.field label{font-size:13px;font-weight:700;color:#334155}.field input,.field select,.field textarea,input[type=text],input[type=number],input[type=date],select{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:11px 12px;background:#fff;color:var(--ink);min-width:0}.btn{border:0;border-radius:10px;padding:11px 14px;font-weight:750}.primary{background:var(--blue);color:#fff}.yellow{background:var(--yellow);color:var(--blue)}.secondary{background:#edf2f9;color:var(--blue);border:1px solid var(--line)}.danger{background:#fff0ef;color:var(--red);border:1px solid #ffd2ce}.success{color:var(--green)}.full{width:100%}.qty{display:flex;align-items:center;gap:6px}.qty button{width:38px;height:40px;border-radius:10px;border:1px solid var(--line);background:#edf2f9;color:var(--blue);font-size:20px;font-weight:800}.qty input{width:76px;text-align:center;padding:9px 4px;font-weight:800;border:1px solid var(--blue);border-radius:9px}.product-row{display:flex;align-items:center;gap:10px}.thumb{width:54px;height:54px;flex:0 0 54px;border-radius:10px;object-fit:cover;background:#edf2f9;display:grid;place-items:center;color:var(--blue);font-size:23px;overflow:hidden}.thumb img{width:100%;height:100%;object-fit:cover}.product-meta{min-width:0;flex:1}.product-meta strong{display:block;overflow-wrap:anywhere}.totalbox{background:#edf3fb;border-radius:12px;padding:14px;margin:14px 0}.total{font-size:27px;font-weight:850;color:var(--blue)}.pill{display:inline-block;background:#edf2f9;color:var(--blue);border-radius:999px;padding:4px 8px;font-size:11px;font-weight:750}.pill.yellowpill{background:#fff2b9}.empty{text-align:center;padding:28px 12px;color:var(--muted)}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.actions button{flex:1}.notice{padding:11px 12px;border-radius:10px;background:#fff7d6;color:#684f00;font-size:13px;margin-bottom:12px}.stock-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.stat{background:#edf3fb;padding:12px;border-radius:12px}.stat strong{display:block;color:var(--blue);font-size:22px}.history-item{border-bottom:1px solid var(--line);padding:12px 0}.history-item:last-child{border:0}.hide{display:none!important}footer{text-align:center;color:var(--muted);font-size:11px;padding:20px 8px}
+@media(min-width:680px){main{padding:22px}.product-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}.product-list .card{margin:0 0 10px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.stock-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="logo">TO</div><div><h1>TORTILLERÍA OBREGÓN</h1><p>Ventas · Inventarios · Reparto</p></div></div><div class="yellowbar"></div></header>
+<nav id="nav">
+<button class="active" data-page="ventas">Nueva venta</button><button data-page="devoluciones">Devoluciones</button><button data-page="inventario">Inventario</button><button data-page="productos">Productos</button><button data-page="historial">Historial</button><button data-page="respaldo">Respaldo</button>
+</nav>
+<main>
+<section id="ventas" class="page active">
+<h2 class="page-title">Nueva venta</h2>
+<div class="card">
+<div class="formgrid">
+<div class="field"><label for="cliente">Cliente / tienda</label><input id="cliente" type="text" placeholder="Nombre de la tienda o Mostrador" value="Mostrador"></div>
+<div class="field"><label for="repartidor">Repartidor</label><input id="repartidor" type="text" placeholder="Nombre del repartidor"></div>
+</div>
+<div class="field"><label>Forma de pago</label><div class="row"><label><input type="radio" name="pago" value="Contado" checked> Contado</label><label><input type="radio" name="pago" value="Crédito"> Crédito</label></div></div>
+</div>
+<div id="saleProducts"></div>
+<div class="totalbox"><div class="row between"><span class="bold">Total del ticket</span><span class="total" id="saleTotal">$0.00</span></div><div class="muted" id="saleCount">0 productos</div></div>
+<button class="btn primary full" id="saveSale">Registrar venta</button>
+<p class="muted small">La cantidad se puede escribir directamente o cambiar con + y −. El teclado numérico aparece al tocar la cantidad.</p>
+</section>
+
+<section id="devoluciones" class="page">
+<h2 class="page-title">Devoluciones de mercancía</h2>
+<div class="notice">Registra las devoluciones antes de iniciar la venta. Las tortillas de maíz aptas para venta se pasan automáticamente al inventario “Tortillas frías”. Verifica que estén en condiciones adecuadas.</div>
+<div class="card">
+<div class="field"><label for="retRepartidor">Repartidor</label><input id="retRepartidor" type="text" placeholder="Nombre del repartidor"></div>
+<div id="returnProducts"></div>
+<div class="field"><label for="returnNote">Nota (opcional)</label><input id="returnNote" type="text" placeholder="Ej. regreso de ruta"></div>
+<button class="btn primary full" id="saveReturns">Registrar devoluciones</button>
+</div>
+<div id="returnMessage" class="muted"></div>
+</section>
+
+<section id="inventario" class="page">
+<h2 class="page-title">Inventario</h2>
+<div class="notice">Ajusta las existencias con cuidado. En esta versión los datos se guardan en este dispositivo.</div>
+<div class="field"><label for="stockFilter">Buscar producto</label><input id="stockFilter" type="text" placeholder="Escribe el nombre..." /></div>
+<div id="stockList"></div>
+</section>
+
+<section id="productos" class="page">
+<h2 class="page-title">Administrar productos</h2>
+<div class="card">
+<h3 id="productFormTitle" style="margin:0 0 10px;color:var(--blue)">Agregar producto</h3>
+<input id="editId" type="hidden">
+<div class="formgrid">
+<div class="field"><label for="prodName">Nombre del producto</label><input id="prodName" type="text" placeholder="Ej. Totopos de chile"></div>
+<div class="field"><label for="prodPrice">Precio de venta ($)</label><input id="prodPrice" type="number" min="0" step="0.01" inputmode="decimal" value="15"></div>
+<div class="field"><label for="prodUnit">Unidad</label><select id="prodUnit"><option>Paquete</option><option>Bolsa</option><option>Pieza</option><option>Caja</option><option>Kilo</option></select></div>
+<div class="field"><label for="prodType">Tipo de inventario</label><select id="prodType"><option value="Normal">Normal</option><option value="Recuperado">Recuperado</option></select></div>
+</div>
+<div class="field"><label for="prodPhoto">Fotografía (cámara o galería)</label><input id="prodPhoto" type="file" accept="image/*" capture="environment"><div class="muted small">En Android puedes tomar una foto o elegir una imagen de tu galería.</div><div id="photoPreview" class="muted small"></div></div>
+<div class="field"><label for="prodStock">Existencia inicial</label><input id="prodStock" type="number" min="0" step="1" inputmode="numeric" value="0"></div>
+<div class="actions"><button class="btn primary" id="saveProduct">Guardar producto</button><button class="btn secondary" id="cancelEdit">Limpiar</button></div>
+</div>
+<div class="row between"><h3 style="color:var(--blue)">Catálogo</h3><span id="productCount" class="pill">0 productos</span></div>
+<div id="productList"></div>
+</section>
+
+<section id="historial" class="page">
+<h2 class="page-title">Historial de movimientos</h2>
+<div class="row" style="gap:8px;margin-bottom:10px"><button class="btn secondary" id="filterAll">Todos</button><button class="btn secondary" id="filterSales">Ventas</button><button class="btn secondary" id="filterReturns">Devoluciones</button></div>
+<div id="historyList"></div>
+</section>
+
+<section id="respaldo" class="page">
+<h2 class="page-title">Respaldo y datos</h2>
+<div class="notice">Los datos se guardan en este navegador. Para usar la misma información en varios teléfonos se necesita configurar una base de datos en la nube; esta versión no sincroniza automáticamente entre dispositivos.</div>
+<div class="card"><h3 style="margin-top:0">Exportar respaldo</h3><p class="muted">Descarga tus productos, inventario e historial para guardarlos de forma segura.</p><button class="btn primary full" id="exportData">Descargar respaldo JSON</button></div>
+<div class="card"><h3 style="margin-top:0">Importar respaldo</h3><p class="muted">Importa un respaldo previamente exportado. Esto reemplazará los datos actuales de este navegador.</p><input id="importFile" type="file" accept="application/json"><button class="btn secondary full" id="importData" style="margin-top:10px">Importar y reemplazar datos</button></div>
+<div class="card"><h3 style="margin-top:0">Instalar en Android</h3><p class="muted">Publica estos archivos en GitHub Pages y abre la dirección con Chrome. Desde el menú de Chrome puedes elegir “Instalar aplicación” o “Agregar a pantalla principal”. El modo sin conexión se activa después de cargar la aplicación con conexión al menos una vez.</p></div>
+</section>
+<footer>Tortillería Obregón · Datos guardados localmente en este dispositivo</footer>
+</main>
+<div id="toast" style="position:fixed;left:12px;right:12px;bottom:18px;background:#123b75;color:#fff;padding:13px 16px;border-radius:12px;box-shadow:0 5px 20px #0003;display:none;z-index:20"></div>
+<script>
+(() => {
+'use strict';
+const DB_KEY='tortilleria_obregon_db_v1';
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(Number(n)||0);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+let db, saleQty={}, returnQty={}, historyFilter='all', pendingPhoto='';
+const starterProducts=[
+{id:'tortillas',name:'Tortillas de maíz',price:24,unit:'Paquete',type:'Normal',stock:0,active:true,photo:''},
+{id:'cold-tortillas',name:'Tortillas frías',price:10,unit:'Paquete',type:'Recuperado',stock:0,active:true,photo:'',specialCold:true},
+{id:'totopos',name:'Totopos',price:32,unit:'Paquete',type:'Normal',stock:0,active:true,photo:''},
+{id:'tostadas',name:'Tostadas',price:13,unit:'Paquete',type:'Normal',stock:0,active:true,photo:''},
+{id:'duros',name:'Duros',price:20,unit:'Bolsa',type:'Normal',stock:0,active:true,photo:''}
+];
+function loadDB(){try{const raw=localStorage.getItem(DB_KEY);if(raw){const parsed=JSON.parse(raw);if(parsed&&Array.isArray(parsed.products))return parsed}}catch(e){}return {products:starterProducts.map(p=>({...p})),sales:[],movements:[],version:1}}
+db=loadDB();
+function persist(){try{localStorage.setItem(DB_KEY,JSON.stringify(db));return true}catch(e){toast('No se pudo guardar. Puede faltar espacio; intenta usar una foto más pequeña o exportar un respaldo.');return false}}
+function toast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.style.display='none',3200)}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function activeProducts(){return db.products.filter(p=>p.active!==false)}
+function findProduct(id){return db.products.find(p=>p.id===id)}
+function addMovement(type,details){db.movements.unshift({id:uid(),type,at:new Date().toISOString(),...details})}
+function nav(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===page));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));renderAll();window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>nav(b.dataset.page)));
+function productImage(p){return p.photo?`<div class="thumb"><img src="${p.photo}" alt=""></div>`:`<div class="thumb">📦</div>`}
+function renderSales(){
+ const list=$('saleProducts');const ps=activeProducts();if(!ps.length){list.innerHTML='<div class="empty">Agrega productos en el apartado Productos.</div>';return}
+ list.innerHTML='<div class="product-list">'+ps.map(p=>{const q=Number(saleQty[p.id]||0);return `<div class="card"><div class="product-row">${productImage(p)}<div class="product-meta"><strong>${esc(p.name)}</strong><span class="muted">${esc(p.unit)} · ${money(p.price)} · Existencia: ${Number(p.stock)||0}</span></div></div><div class="row between" style="margin-top:12px"><div class="qty"><button type="button" data-minus="${p.id}" aria-label="Restar">−</button><input type="number" inputmode="numeric" min="0" step="1" data-qty="${p.id}" value="${q}" aria-label="Cantidad de ${esc(p.name)}"><button type="button" data-plus="${p.id}" aria-label="Sumar">+</button></div><strong class="price">${money(q*Number(p.price))}</strong></div></div>`}).join('')+'</div>';
+ list.querySelectorAll('[data-minus]').forEach(b=>b.onclick=()=>setSaleQty(b.dataset.minus,Math.max(0,(Number(saleQty[b.dataset.minus])||0)-1)));
+ list.querySelectorAll('[data-plus]').forEach(b=>b.onclick=()=>setSaleQty(b.dataset.plus,(Number(saleQty[b.dataset.plus])||0)+1));
+ list.querySelectorAll('[data-qty]').forEach(inp=>inp.onchange=()=>setSaleQty(inp.dataset.qty,Math.max(0,Math.floor(Number(inp.value)||0))));
+ updateSaleTotal();
+}
+function setSaleQty(id,n){saleQty[id]=n;renderSales()}
+function updateSaleTotal(){let total=0,count=0;activeProducts().forEach(p=>{const q=Number(saleQty[p.id])||0;total+=q*(Number(p.price)||0);count+=q});$('saleTotal').textContent=money(total);$('saleCount').textContent=count+' unidades en el ticket'}
+$('saveSale').onclick=()=>{
+ const items=activeProducts().filter(p=>(Number(saleQty[p.id])||0)>0).map(p=>({productId:p.id,name:p.name,qty:Number(saleQty[p.id]),price:Number(p.price),unit:p.unit,subtotal:Number(saleQty[p.id])*Number(p.price)}));
+ if(!items.length){toast('Agrega al menos un producto a la venta.');return}
+ const short=items.find(it=>{const p=findProduct(it.productId);return p&&it.qty>Number(p.stock||0)});
+ if(short){toast('Existencia insuficiente de '+short.name+'. Ajusta el inventario antes de vender.');return}
+ const total=items.reduce((s,i)=>s+i.subtotal,0), sale={id:uid(),at:new Date().toISOString(),client:$('cliente').value.trim()||'Mostrador',repartidor:$('repartidor').value.trim(),payment:document.querySelector('input[name="pago"]:checked').value,items,total};
+ items.forEach(it=>{const p=findProduct(it.productId);p.stock-=it.qty});
+ db.sales.unshift(sale);addMovement('Venta',{saleId:sale.id,client:sale.client,repartidor:sale.repartidor,total,items});persist();saleQty={};renderAll();toast('Venta registrada. Total: '+money(total));if(navigator.vibrate)navigator.vibrate(100);
+};
+function renderReturns(){
+ const ps=activeProducts().filter(p=>!p.specialCold);
+ $('returnProducts').innerHTML=ps.map(p=>`<div class="card"><div class="row between"><div class="grow"><strong>${esc(p.name)}</strong><div class="muted">${esc(p.unit)} · Existencia actual: ${Number(p.stock)||0}</div></div><div style="width:105px"><label class="muted" for="ret-${p.id}">Devueltos</label><input id="ret-${p.id}" data-ret="${p.id}" type="number" inputmode="numeric" min="0" step="1" value="${Number(returnQty[p.id]||0)}"></div></div></div>`).join('');
+ $('returnProducts').querySelectorAll('[data-ret]').forEach(i=>i.onchange=()=>returnQty[i.dataset.ret]=Math.max(0,Math.floor(Number(i.value)||0)));
+}
+$('saveReturns').onclick=()=>{
+ const entries=Object.entries(returnQty).filter(([id,q])=>Number(q)>0&&findProduct(id)&&findProduct(id).active!==false);
+ if(!entries.length){toast('Escribe la cantidad de al menos un producto devuelto.');return}
+ const items=[];
+ for(const [id,q0] of entries){const p=findProduct(id),q=Number(q0);let destination=p;
+   if(p.id==='tortillas'||p.name.trim().toLowerCase()==='tortillas de maíz'){destination=db.products.find(x=>x.specialCold)||db.products.find(x=>x.name.trim().toLowerCase()==='tortillas frías');if(!destination){toast('Primero crea el producto “Tortillas frías”.');return}destination.stock=(Number(destination.stock)||0)+q;items.push({productId:p.id,name:p.name,qty:q,destinationId:destination.id,destinationName:destination.name,unit:p.unit});}
+   else {p.stock=(Number(p.stock)||0)+q;items.push({productId:p.id,name:p.name,qty:q,destinationId:p.id,destinationName:p.name,unit:p.unit});}
+ }
+ const movement={repartidor:$('retRepartidor').value.trim(),note:$('returnNote').value.trim(),items,totalUnits:items.reduce((s,i)=>s+i.qty,0),estimatedValue:items.reduce((s,i)=>s+i.qty*(Number(findProduct(i.destinationId)?.price)||0),0)};
+ addMovement('Devolución',movement);persist();returnQty={};$('returnNote').value='';renderAll();$('returnMessage').textContent='Devolución registrada. Las tortillas de maíz se enviaron al inventario de tortillas frías.';toast('Devoluciones guardadas.');
+};
+function renderStock(){
+ const query=$('stockFilter').value.toLowerCase();const ps=db.products.filter(p=>p.active!==false&&p.name.toLowerCase().includes(query));
+ $('stockList').innerHTML=ps.length?ps.map(p=>`<div class="card"><div class="product-row">${productImage(p)}<div class="product-meta"><strong>${esc(p.name)}</strong><div class="muted">${esc(p.unit)} · ${money(p.price)} · ${p.type==='Recuperado'?'Recuperado':'Normal'}</div></div><span class="pill">${Number(p.stock)||0} uds.</span></div><div class="row" style="margin-top:10px;gap:8px"><button class="btn secondary" data-stock-minus="${p.id}">− 1</button><input style="width:90px;text-align:center" type="number" min="0" step="1" inputmode="numeric" data-stock="${p.id}" value="${Number(p.stock)||0}"><button class="btn secondary" data-stock-plus="${p.id}">+ 1</button><button class="btn yellow" data-stock-save="${p.id}">Guardar</button></div></div>`).join(''):'<div class="empty">No hay productos activos que coincidan con la búsqueda.</div>';
+ $('stockList').querySelectorAll('[data-stock-minus]').forEach(b=>b.onclick=()=>adjustStock(b.dataset.stockMinus,-1));
+ $('stockList').querySelectorAll('[data-stock-plus]').forEach(b=>b.onclick=()=>adjustStock(b.dataset.stockPlus,1));
+ $('stockList').querySelectorAll('[data-stock-save]').forEach(b=>b.onclick=()=>{const id=b.dataset.stockSave,inp=$('stockList').querySelector(`[data-stock="${id}"]`),p=findProduct(id);p.stock=Math.max(0,Math.floor(Number(inp.value)||0));addMovement('Ajuste de inventario',{productId:id,name:p.name,stock:p.stock});persist();renderAll();toast('Inventario actualizado.')});
+}
+$('stockFilter').addEventListener('input',renderStock);
+function adjustStock(id,delta){const p=findProduct(id);if(!p)return;p.stock=Math.max(0,(Number(p.stock)||0)+delta);addMovement('Ajuste de inventario',{productId:id,name:p.name,stock:p.stock});persist();renderAll()}
+function resetProductForm(){ $('editId').value='';$('prodName').value='';$('prodPrice').value='15';$('prodUnit').value='Paquete';$('prodType').value='Normal';$('prodStock').value='0';$('prodPhoto').value='';$('photoPreview').textContent='';pendingPhoto='';$('productFormTitle').textContent='Agregar producto';$('saveProduct').textContent='Guardar producto'}
+$('cancelEdit').onclick=resetProductForm;
+$('prodPhoto').addEventListener('change',async e=>{
+ const file=e.target.files&&e.target.files[0];if(!file)return;
+ if(!file.type.startsWith('image/')){toast('Selecciona una imagen.');return}
+ try{pendingPhoto=await resizeImage(file);$('photoPreview').textContent='Foto lista para guardar.'}catch(err){toast('No se pudo cargar esa foto. Intenta con otra imagen.')}
+});
+function resizeImage(file){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onerror=reject;reader.onload=()=>{const img=new Image();img.onerror=reject;img.onload=()=>{const max=700,scale=Math.min(1,max/Math.max(img.width,img.height)),canvas=document.createElement('canvas');canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL('image/jpeg',.78))};img.src=reader.result};reader.readAsDataURL(file)})}
+$('saveProduct').onclick=()=>{
+ const name=$('prodName').value.trim(),price=Number($('prodPrice').value),stock=Math.max(0,Math.floor(Number($('prodStock').value)||0)),id=$('editId').value;
+ if(!name){toast('Escribe el nombre del producto.');$('prodName').focus();return}
+ if(!Number.isFinite(price)||price<0){toast('Escribe un precio válido.');return}
+ let p=id?findProduct(id):null;
+ if(p){p.name=name;p.price=price;p.unit=$('prodUnit').value;p.type=$('prodType').value;p.stock=stock;if(pendingPhoto)p.photo=pendingPhoto;addMovement('Producto editado',{productId:p.id,name:p.name,price:p.price})}
+ else {p={id:uid(),name,price,unit:$('prodUnit').value,type:$('prodType').value,stock,active:true,photo:pendingPhoto||'',specialCold:false};db.products.push(p);addMovement('Producto agregado',{productId:p.id,name:p.name,price:p.price})}
+ if(!persist())return;resetProductForm();renderAll();toast(id?'Producto actualizado.':'Producto agregado al catálogo.')
+};
+function editProduct(id){const p=findProduct(id);if(!p)return;$('editId').value=p.id;$('prodName').value=p.name;$('prodPrice').value=p.price;$('prodUnit').value=p.unit;$('prodType').value=p.type;$('prodStock').value=p.stock;$('photoPreview').textContent=p.photo?'Ya tiene una fotografía.':'Sin fotografía.';pendingPhoto='';$('productFormTitle').textContent='Editar producto';$('saveProduct').textContent='Guardar cambios';nav('productos');window.scrollTo({top:0,behavior:'smooth'})}
+function toggleProduct(id){const p=findProduct(id);if(!p)return;if(p.specialCold){toast('El inventario de tortillas frías no se puede desactivar desde aquí.');return}p.active=p.active===false?true:false;addMovement(p.active?'Producto activado':'Producto desactivado',{productId:p.id,name:p.name});persist();renderAll();toast(p.active?'Producto activado.':'Producto desactivado; se conserva el historial.')}
+function renderProducts(){
+ const ps=db.products;$('productCount').textContent=ps.filter(p=>p.active!==false).length+' activos';
+ $('productList').innerHTML=ps.length?ps.slice().sort((a,b)=>(a.active===false)-(b.active===false)).map(p=>`<div class="card"><div class="product-row">${productImage(p)}<div class="product-meta"><strong>${esc(p.name)} ${p.active===false?'<span class="pill">Desactivado</span>':''}</strong><div class="muted">${esc(p.unit)} · ${money(p.price)} · ${esc(p.type)} · Existencia: ${Number(p.stock)||0}</div></div></div><div class="actions"><button class="btn secondary" data-edit="${p.id}">Editar</button><button class="btn ${p.active===false?'yellow':'danger'}" data-toggle="${p.id}">${p.active===false?'Activar':'Desactivar'}</button></div></div>`).join(''):'<div class="empty">Todavía no hay productos.</div>';
+ $('productList').querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editProduct(b.dataset.edit));
+ $('productList').querySelectorAll('[data-toggle]').forEach(b=>b.onclick=()=>toggleProduct(b.dataset.toggle));
+}
+function renderHistory(filter=historyFilter){
+ historyFilter=filter;let arr=db.movements;if(filter==='sales')arr=arr.filter(m=>m.type==='Venta');if(filter==='returns')arr=arr.filter(m=>m.type==='Devolución');
+ $('historyList').innerHTML=arr.length?arr.map(m=>{const date=new Date(m.at).toLocaleString('es-MX');let desc='';if(m.type==='Venta')desc=`${esc(m.client||'Mostrador')} · ${money(m.total)} · ${(m.items||[]).map(i=>`${esc(i.name)} × ${i.qty}`).join(', ')}`;else if(m.type==='Devolución')desc=`${(m.items||[]).map(i=>`${esc(i.name)} × ${i.qty} → ${esc(i.destinationName)}`).join(', ')} · Repartidor: ${esc(m.repartidor||'No indicado')}`;else desc=esc(m.name||m.note||'Movimiento');return `<div class="history-item"><div class="row between"><strong>${esc(m.type)}</strong><span class="muted small">${esc(date)}</span></div><div class="muted">${desc}</div></div>`}).join(''):'<div class="empty">No hay movimientos registrados.</div>';
+}
+$('filterAll').onclick=()=>renderHistory('all');$('filterSales').onclick=()=>renderHistory('sales');$('filterReturns').onclick=()=>renderHistory('returns');
+function renderAll(){renderSales();renderReturns();renderStock();renderProducts();renderHistory()}
+$('exportData').onclick=()=>{const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='respaldo-tortilleria-obregon-'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(url);toast('Respaldo preparado.')}
+$('importData').onclick=async()=>{const f=$('importFile').files[0];if(!f){toast('Selecciona un archivo JSON de respaldo.');return}if(!confirm('Esto reemplazará los datos actuales de este navegador. ¿Continuar?'))return;try{const parsed=JSON.parse(await f.text());if(!Array.isArray(parsed.products)||!Array.isArray(parsed.sales)||!Array.isArray(parsed.movements))throw Error('Formato inválido');db=parsed;persist();renderAll();toast('Respaldo importado.')}catch(e){toast('El archivo no parece ser un respaldo válido de esta aplicación.')}};
+if(!db.products.some(p=>p.specialCold||p.name.trim().toLowerCase()==='tortillas frías')){db.products.push({...starterProducts[1]});persist()}
+renderAll();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+})();
+</script>
+</body>
+</html>
